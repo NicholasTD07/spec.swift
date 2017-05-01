@@ -15,7 +15,9 @@ class specTests: XCTestCase {
         describe("spec") {
             $0.it("tests equality") {
                 XCTAssertTrue(expect(1) == 1)
-                /* XCTAssertTrue(expect(1) == 2) */
+                // To make sure everything is working properly,
+                // uncomment the line below to see the test fails.
+                // XCTAssertTrue(expect(1) == 2)
             }
         }
     }
