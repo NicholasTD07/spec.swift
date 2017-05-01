@@ -15,15 +15,19 @@ public class Context {
 }
 
 public struct Expectation<T> {
-    private let value: T
+    fileprivate let value: T
 
     internal init(_ value: T) {
         self.value = value
     }
 }
 
-public func == <T>(rhs: Expectation<T>, lhs: Any) -> Bool {
-    return false
+public func == <T: Equatable> (expectation: Expectation<T>, actual: Any) -> Bool {
+    guard let actual = actual as? T else {
+        return false
+    }
+
+    return expectation.value == actual
 }
 
 public func expect<T>(_ value: T) -> Expectation<T> {

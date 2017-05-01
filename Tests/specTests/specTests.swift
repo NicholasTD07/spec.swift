@@ -18,10 +18,6 @@ class specTests: XCTestCase {
                 /* XCTAssertTrue(expect(1) == 2) */
             }
         }
-
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        //// XCTAssertEqual(spec().text, "Hello, World!")
     }
 
     static var allTests = [
