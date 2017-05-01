@@ -10,7 +10,7 @@ import Foundation
 
 public class Context {
     public func it(_ name: String, _ closure: () -> Void) {
-
+        closure()
     }
 }
 
@@ -31,5 +31,7 @@ public func expect<T>(_ value: T) -> Expectation<T> {
 }
 
 public func describe(_ name: String, _ closure: (Context) -> Void) {
+    let context = Context()
 
+    closure(context)
 }

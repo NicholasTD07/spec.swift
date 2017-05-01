@@ -14,7 +14,8 @@ class specTests: XCTestCase {
     func testExample() {
         describe("spec") {
             $0.it("tests equality") {
-                expect(1) == 1
+                XCTAssertTrue(expect(1) == 1)
+                /* XCTAssertTrue(expect(1) == 2) */
             }
         }
 
