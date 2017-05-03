@@ -23,10 +23,11 @@ struct Cat {
     var actions: [Action] = []
 
     private mutating func did(_ action: Action) {
+        print(action)
         actions.append(action)
     }
 
-    mutating func eat(_ food: Food) {
+    mutating func feed(_ food: Food) {
         did(.eat(food))
         meow()
     }
@@ -46,7 +47,7 @@ func testSpec() {
 
         $0.before { cat = Cat() }
 
-        context("when being fed") {
+        $0.context("when being fed") {
             $0.before { cat.feed(.fish) }
             $0.it("eats") { /* expect(cat.actions).contains(.eat(.food)) */ }
             $0.it("meows") { /* expect(cat.actions.last) == .meow */ }
@@ -59,6 +60,7 @@ func testSpec() {
 
 class specTests: XCTestCase {
     func testExample() {
+        testSpec()
     }
 
     static var allTests = [
