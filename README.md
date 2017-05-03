@@ -61,6 +61,14 @@ All lines after that are printed by `./Tests/specTests/specTests.swift` the
 You can also add or change the tests in the `specTests.swift` file. However, as
 of now, there is no support for matchers, e.g. `expect(this).isAmazing()`.
 
+## Git workflow
+
+I'd like to keep the branch/history graph as simple as it can be. So,
+
+only merge branches with "Rebase and merge" option. OR,
+
+do it in cli with `git merge --ff-only feature-branch`
+
 ## LICENSE
 
 spec.swift is released under the MIT license. See [LICENSE](LICENSE) for details.
