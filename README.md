@@ -54,6 +54,8 @@ meow
 sleep
 ```
 
+This is proof for all the setup, teardown are run.
+
 First line is printed by `./Sources/spec.swift`, the `atexit` closure (line 94).
 All lines after that are printed by `./Tests/specTests/specTests.swift` the
 `Cat.did` method (line 26)
