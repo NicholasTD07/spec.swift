@@ -7,7 +7,7 @@ Coming soon
 ## Try it out
 
 1. Clone the repo
-2. Have Swift 3 installed
+2. Have Swift 3 installed (if you haven't already got it - you should)
 3. `cd` into this repo's path
 4. `swift test`
 
