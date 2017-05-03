@@ -13,11 +13,9 @@ import spec
 class specTests: XCTestCase {
     func testExample() {
         describe("spec") {
-            $0.it("tests equality") {
-                XCTAssertTrue(expect(1) == 1)
-                // To make sure everything is working properly,
-                // uncomment the line below to see the test fails.
-                // XCTAssertTrue(expect(1) == 2)
+            $0.context("tests equality") {
+                $0.it("passes if values are equal") { expect(1) == 1 }
+                $0.it("fails if values are not equal") { expect(1) == 2 }
             }
         }
     }

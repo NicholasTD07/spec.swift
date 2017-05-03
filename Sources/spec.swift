@@ -8,8 +8,25 @@
 
 import Foundation
 
+public typealias Example = (name: String, closure: () -> Void)
+
 public class Context {
-    public func it(_ name: String, _ closure: () -> Void) {
+    /* let name: String */
+    /* var examples = [Example]() */
+
+    /* internal init(name: String) { */
+    /*     self.name = name */
+    /* } */
+
+    public func context(_ name: String, _ closure: @escaping (Context) -> Void) {
+        let context = Context() // (name: name)
+
+        print(name)
+        closure(context)
+    }
+
+    public func it(_ name: String, _ closure: @escaping () -> Void) {
+        print(name)
         closure()
     }
 }
@@ -22,12 +39,16 @@ public struct Expectation<T> {
     }
 }
 
-public func == <T: Equatable> (expectation: Expectation<T>, actual: Any) -> Bool {
+public func == <T: Equatable> (expectation: Expectation<T>, actual: Any) {
     guard let actual = actual as? T else {
-        return false
+        return
     }
 
-    return expectation.value == actual
+    if expectation.value == actual {
+        print("passed")
+    } else {
+        print("failed")
+    }
 }
 
 public func expect<T>(_ value: T) -> Expectation<T> {
@@ -35,7 +56,8 @@ public func expect<T>(_ value: T) -> Expectation<T> {
 }
 
 public func describe(_ name: String, _ closure: (Context) -> Void) {
-    let context = Context()
+    let context = Context() // (name: name)
 
+    print(name)
     closure(context)
 }
