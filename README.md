@@ -32,3 +32,7 @@ All lines after that are printed by `./Tests/specTests/specTests.swift` the
 
 You can also add or change the tests in the `specTests.swift` file. However, as
 of now, there is no support for matchers, e.g. `expect(this).isAmazing()`.
+
+## LICENSE
+
+spec.swift is released under the MIT license. See [LICENSE](LICENSE) for details.
