@@ -1,5 +1,33 @@
 # spec.swift
 
+Pure Swift BDD framework
+
+## What can it do?
+
+Runs the set up hooks (`before`, `after`) and also the tests.
+
+### What it cannot do?
+
+**Matchers**
+
+It does not verify things yet. e.g.
+
+```swift
+let love = false
+expect(love).isTrue()
+
+let dock: [Icon] = ["📔", "🎵", "📷"] // real apps!
+expect(dock).isEmpty()
+
+let shopping = ToDo("Buy milk")
+let todos: [ToDo] = [ shopping ]
+expect(todos).contains(shopping)
+```
+
+**Async Tests**
+
+Nope. Not those. Not now.
+
 ## Usage
 
 Coming soon
