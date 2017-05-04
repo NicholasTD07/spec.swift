@@ -65,8 +65,8 @@ func testSpec() {
         $0.after { cat.sleep() }
 
         // FIXME:
-        //  expected: Cat - did not sleep
-        //       got: Cat - when being feed - did not sleep
+        //  expected: Cat - did not sleep - passed
+        //       got: Cat - when being feed - did not sleep - passed
         $0.it("did not sleep") { expect(cat.actions.last) != .sleep }
     }
 }
