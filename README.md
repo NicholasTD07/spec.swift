@@ -37,6 +37,8 @@ expect(["an array"]).to.beEmpty()
 expect(["an array"]).to.contain("another array")
 ```
 
+More matchers coming soon!
+
 ### What it cannot do?
 
 **Async Tests**
