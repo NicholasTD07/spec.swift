@@ -77,9 +77,15 @@ public class Context {
     }
 }
 
-/* private extension Array where Element == Step { */
-/* } */
+public struct Expression<T> {
+    let expression: () -> T
+    /* let location: */ 
 
+    public var to: Expression { return self }
+}
+
+public struct TestResult<T> {
+}
 
 public func describe(_ name: String, _ closure: @escaping (Context) -> Void) {
     let context = Context(name: name)
@@ -87,6 +93,10 @@ public func describe(_ name: String, _ closure: @escaping (Context) -> Void) {
     currentGroup = [.left(context)]
 
     closure(context)
+}
+
+public func expect<T>(_ expression: @autoclosure @escaping () -> T) -> Expression<T> {
+    return Expression(expression: expression)
 }
 
 private var currentGroup: Group = {
@@ -113,6 +123,12 @@ private func execute(_ groups: [Group]) {
 
             context.afters.forEach { $0() }
         }
+    }
+}
+
+extension Expression where T: Sequence {
+    public func contain(_ value: T.Iterator.Element) -> TestResult<T> {
+        return TestResult()
     }
 }
 

@@ -49,7 +49,7 @@ func testSpec() {
 
         $0.context("when being fed") {
             $0.before { cat.feed(.fish) }
-            $0.it("eats") { /* expect(cat.actions).contains(.eat(.food)) */ }
+            $0.it("eats") { expect(cat.actions).to.contain(.eat(.fish)) }
             $0.it("meows") { /* expect(cat.actions.last) == .meow */ }
         }
 
