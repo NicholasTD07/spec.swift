@@ -60,6 +60,8 @@ public class Context {
         currentGroup.append(.left(context))
 
         closure(context)
+
+        _ = currentGroup.popLast()
     }
 
     public func it(_ name: String, _ closure: @escaping () -> TestResult.State) {
@@ -154,6 +156,12 @@ private func execute(_ groups: [Group]) {
 }
 
 // Matchers
+
+extension Expression where T: Collection {
+    public func beEmpty() -> TestResult.State {
+        return .init(passed: actual.isEmpty)
+    }
+}
 
 extension Expression where T: Sequence, T.Iterator.Element: Equatable {
     public func contain(_ value: T.Iterator.Element) -> TestResult.State {
