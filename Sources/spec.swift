@@ -135,9 +135,15 @@ private func execute(_ groups: [Group]) {
 
 // Matchers
 
-extension Expression where T: Sequence {
+extension Expression where T: Sequence, T.Iterator.Element: Equatable {
     public func contain(_ value: T.Iterator.Element) -> TestResult {
-        return TestResult()
+        let actual = expression()
+
+        if actual.contains(value) {
+            return TestResult()
+        } else {
+            return TestResult()
+        }
     }
 }
 

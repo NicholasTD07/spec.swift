@@ -14,10 +14,18 @@ struct Cat {
     enum Food {
         case fish
     }
-    enum Action {
+    enum Action: Equatable {
         case eat(Food)
         case meow
         case sleep
+        static func ==(lhs: Action, rhs: Action) -> Bool {
+            switch (lhs, rhs) {
+                case let (.eat(l), .eat(r)): return l == r
+                case (.meow, .meow): return true
+                case (.sleep, .sleep): return true
+                default: return false
+            }
+        }
     }
 
     var actions: [Action] = []
