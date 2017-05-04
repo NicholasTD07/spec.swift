@@ -21,10 +21,12 @@ enum Either<Left, Right> {
 
 typealias Step = Either<Context, Test>
 typealias Group = [Step]
+typealias ResultStep = Either<String, TestResult>
+typealias ResultGroup = [ResultStep]
 
 public struct Test {
     internal let name: String
-    internal let closure: () -> Void
+    internal let closure: () -> TestResult
 }
 
 public class Context {
@@ -60,7 +62,7 @@ public class Context {
         closure(context)
     }
 
-    public func it(_ name: String, _ closure: @escaping () -> Void) {
+    public func it(_ name: String, _ closure: @escaping () -> TestResult) {
         guard !currentGroup.isEmpty else {
             // Only publicly accessible way to create `Context`
             // is to call the global `describe` func
@@ -79,12 +81,12 @@ public class Context {
 
 public struct Expression<T> {
     let expression: () -> T
-    /* let location: */ 
+    /* let location: */
 
     public var to: Expression { return self }
 }
 
-public struct TestResult<T> {
+public struct TestResult {
 }
 
 public func describe(_ name: String, _ closure: @escaping (Context) -> Void) {
@@ -107,30 +109,47 @@ private var currentGroup: Group = {
     return []
 }()
 private var groups: [Group] = []
+private var resultGroups: [ResultGroup] = []
 
 private func execute(_ groups: [Group]) {
-    groups.forEach { group in
-        group.forEach { step in
+    resultGroups = groups.map { group -> ResultGroup in
+        let resultGroup =  group.map { step -> ResultStep in
             switch step {
             case let .left(context):
                 context.befores.forEach { $0() }
+                return .left(context.name)
             case let .right(test):
-                test.closure()
+                return .right(test.closure())
             }
         }
+
         group.reversed().forEach { step in
             guard case let .left(context) = step else { return }
 
             context.afters.forEach { $0() }
         }
+
+        return resultGroup
     }
 }
 
+// Matchers
+
 extension Expression where T: Sequence {
-    public func contain(_ value: T.Iterator.Element) -> TestResult<T> {
+    public func contain(_ value: T.Iterator.Element) -> TestResult {
         return TestResult()
     }
 }
+
+public func != <T>(_ expression: Expression<T>, _ expected: T) -> TestResult{
+        return TestResult()
+}
+
+public func == <T>(_ expression: Expression<T>, _ expected: T) -> TestResult{
+        return TestResult()
+}
+
+// CustomDebugStringConvertible
 
 extension Either: CustomDebugStringConvertible {
     var debugDescription: String {

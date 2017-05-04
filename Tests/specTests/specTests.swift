@@ -50,11 +50,11 @@ func testSpec() {
         $0.context("when being fed") {
             $0.before { cat.feed(.fish) }
             $0.it("eats") { expect(cat.actions).to.contain(.eat(.fish)) }
-            $0.it("meows") { /* expect(cat.actions.last) == .meow */ }
+            $0.it("meows") { expect(cat.actions.last) == .meow }
         }
 
         $0.after { cat.sleep() }
-        $0.it("did not sleep") { /* expect(cat.actions.last) != .sleep */ }
+        $0.it("did not sleep") { expect(cat.actions.last) != .sleep }
     }
 }
 
