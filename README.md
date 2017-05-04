@@ -6,23 +6,38 @@ Pure Swift BDD framework
 
 Runs the set up hooks (`before`, `after`) and also the tests.
 
-### What it cannot do?
 
 **Matchers**
 
-It does not verify things yet. e.g.
+It does verify things now. Just not all the following though...
 
 ```swift
 let love = false
-expect(love).isTrue()
+expect(love).to.beTrue()
 
 let dock: [Icon] = ["📔", "🎵", "📷"] // real apps!
-expect(dock).isEmpty()
+expect(dock).to.beEmpty()
 
 let shopping = ToDo("Buy milk")
 let todos: [ToDo] = [ shopping ]
-expect(todos).contains(shopping)
+expect(todos).to.contain(shopping)
 ```
+
+It can do these now:
+
+```swift
+expect(42) == 42
+expect(42) != 2017
+
+// Also, the above works for values wrapped in Optional
+let optional: Int? = 42
+expect(optional) == 42
+
+expect(["an array"]).to.beEmpty()
+expect(["an array"]).to.contain("another array")
+```
+
+### What it cannot do?
 
 **Async Tests**
 
@@ -42,26 +57,25 @@ Coming soon
 You should see something like this.
 
 ```
-[[Cat, when being fed, eats], [Cat, when being fed, meows], [Cat, when being fed, did not sleep]]
+[[Cat, when being fed, eats], [Cat, when being fed, meows], [Cat, did not sleep]]
 eat
 meow
 sleep
 eat
 meow
 sleep
-eat
-meow
 sleep
+[[Cat, when being fed, eats passed], [Cat, when being fed, meows passed], [Cat, did not sleep passed]]
 ```
 
-This is proof for all the setup, teardown are run.
+This is proof for all the setup, teardown and also the tests are run.
 
 First line is printed by `./Sources/spec.swift`, the `atexit` closure (line 94).
 All lines after that are printed by `./Tests/specTests/specTests.swift` the
-`Cat.did` method (line 26)
+`Cat.did` method (line 26) except the last line. That's my pseudo test report
+before I have time to make a fancy one.
 
-You can also add or change the tests in the `specTests.swift` file. However, as
-of now, there is no support for matchers, e.g. `expect(this).isAmazing()`.
+You can also add or change the tests in the `specTests.swift` file.
 
 ## Git workflow
 
