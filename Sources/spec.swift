@@ -94,7 +94,8 @@ public struct TestResult {
     public enum State {
         case passed
         case failed
-        case typeMismatch // TODO: include the expected and actual types if possible
+        case typeMismatched // TODO: include the expected and actual types if possible
+        // TODO: add a mismatching values?
 
         init(passed: Bool) {
             if passed {
@@ -176,7 +177,7 @@ public func == <T>(_ expression: Expression<Optional<T>>, _ expected: T) -> Test
     where T: Equatable
 {
     guard let actual = expression.actual else {
-        return .typeMismatch
+        return .typeMismatched
     }
 
     return .init(passed: actual == expected)
@@ -186,7 +187,7 @@ public func != <T>(_ expression: Expression<Optional<T>>, _ expected: T) -> Test
     where T: Equatable
 {
     guard let actual = expression.actual else {
-        return .typeMismatch
+        return .typeMismatched
     }
 
     return .init(passed: actual != expected)
