@@ -18,6 +18,7 @@ struct Cat {
         case eat(Food)
         case meow
         case sleep
+
         static func ==(lhs: Action, rhs: Action) -> Bool {
             switch (lhs, rhs) {
                 case let (.eat(l), .eat(r)): return l == r
@@ -62,6 +63,10 @@ func testSpec() {
         }
 
         $0.after { cat.sleep() }
+
+        // FIXME:
+        //  expected: Cat - did not sleep
+        //       got: Cat - when being feed - did not sleep
         $0.it("did not sleep") { expect(cat.actions.last) != .sleep }
     }
 }

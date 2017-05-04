@@ -26,7 +26,7 @@ typealias ResultGroup = [ResultStep]
 
 public struct Test {
     internal let name: String
-    internal let closure: () -> TestResult
+    internal let closure: () -> TestResult.State
 }
 
 public class Context {
@@ -62,7 +62,7 @@ public class Context {
         closure(context)
     }
 
-    public func it(_ name: String, _ closure: @escaping () -> TestResult) {
+    public func it(_ name: String, _ closure: @escaping () -> TestResult.State) {
         guard !currentGroup.isEmpty else {
             // Only publicly accessible way to create `Context`
             // is to call the global `describe` func
@@ -84,9 +84,26 @@ public struct Expression<T> {
     /* let location: */
 
     public var to: Expression { return self }
+    public var actual: T { return expression() }
 }
 
 public struct TestResult {
+    let name: String
+    let state: State
+
+    public enum State {
+        case passed
+        case failed
+        case typeMismatch // TODO: include the expected and actual types if possible
+
+        init(passed: Bool) {
+            if passed {
+                self = .passed
+            } else {
+                self = .failed
+            }
+        }
+    }
 }
 
 public func describe(_ name: String, _ closure: @escaping (Context) -> Void) {
@@ -105,6 +122,7 @@ private var currentGroup: Group = {
     atexit {
         print(groups)
         execute(groups)
+        print(resultGroups)
     }
     return []
 }()
@@ -119,7 +137,8 @@ private func execute(_ groups: [Group]) {
                 context.befores.forEach { $0() }
                 return .left(context.name)
             case let .right(test):
-                return .right(test.closure())
+                let result = TestResult(name: test.name, state: test.closure())
+                return .right(result)
             }
         }
 
@@ -136,23 +155,41 @@ private func execute(_ groups: [Group]) {
 // Matchers
 
 extension Expression where T: Sequence, T.Iterator.Element: Equatable {
-    public func contain(_ value: T.Iterator.Element) -> TestResult {
-        let actual = expression()
-
-        if actual.contains(value) {
-            return TestResult()
-        } else {
-            return TestResult()
-        }
+    public func contain(_ value: T.Iterator.Element) -> TestResult.State {
+        return .init(passed: actual.contains(value))
     }
 }
 
-public func != <T>(_ expression: Expression<T>, _ expected: T) -> TestResult{
-        return TestResult()
+public func == <T>(_ expression: Expression<T>, _ expected: T) -> TestResult.State
+    where T: Equatable
+{
+    return .init(passed: expression.actual == expected)
 }
 
-public func == <T>(_ expression: Expression<T>, _ expected: T) -> TestResult{
-        return TestResult()
+public func != <T>(_ expression: Expression<T>, _ expected: T) -> TestResult.State
+    where T: Equatable
+{
+    return .init(passed: expression.actual != expected)
+}
+
+public func == <T>(_ expression: Expression<Optional<T>>, _ expected: T) -> TestResult.State
+    where T: Equatable
+{
+    guard let actual = expression.actual else {
+        return .typeMismatch
+    }
+
+    return .init(passed: actual == expected)
+}
+
+public func != <T>(_ expression: Expression<Optional<T>>, _ expected: T) -> TestResult.State
+    where T: Equatable
+{
+    guard let actual = expression.actual else {
+        return .typeMismatch
+    }
+
+    return .init(passed: actual != expected)
 }
 
 // CustomDebugStringConvertible
@@ -174,4 +211,8 @@ extension Context: CustomDebugStringConvertible {
 
 extension Test: CustomDebugStringConvertible {
     public var debugDescription: String { return name }
+}
+
+extension TestResult: CustomDebugStringConvertible {
+    public var debugDescription: String { return "\(name) \(state)" }
 }
