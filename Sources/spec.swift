@@ -125,10 +125,15 @@ private var currentGroup: Group = {
     atexit {
         print(groups)
         execute(groups)
+
+        print(Report.report(resultGroups, using: .doc))
+
         print(resultGroups)
+
     }
     return []
 }()
+
 private var groups: [Group] = []
 private var resultGroups: [ResultGroup] = []
 
@@ -152,6 +157,68 @@ private func execute(_ groups: [Group]) {
         }
 
         return resultGroup
+    }
+}
+
+// Reporting
+
+enum Report {
+    case doc
+    case dot
+
+    enum Text: CustomStringConvertible {
+        case indentation(level: Int)
+        case text(String)
+        case color
+
+        var description: String {
+            switch self {
+            case let .indentation(level): return String(repeating: "  ", count: level)
+            case let .text(string): return string
+            case .color: return ""
+            }
+        }
+    }
+
+    static func report(_ resultGroups: [ResultGroup], using style: Report) -> String {
+        switch style {
+        case .doc:
+            return docReport(resultGroups)
+        case .dot:
+            return dotReport(resultGroups)
+        }
+    }
+
+    private static func docReport(_ resultGroups: [ResultGroup]) -> String {
+        let xs = resultGroups.map { resultGroup in
+            return resultGroup.enumerated().map { (index, step) -> [Text] in
+                switch step {
+                case let .left(name):
+                    return [.indentation(level: index), .text(name)]
+                case let .right(result):
+                    return [.indentation(level: index), .text(result.name)]
+                }
+            }
+        }
+
+        // group 0, group 1, group 2
+        xs.joined().forEach {
+            print($0.map { String(describing: $0) }.joined())
+        }
+
+        return ""
+        /* return resultGroups.map { resultGroup -> String in */
+        /*     return resultGroup.map { step -> String in */
+        /*         switch step { */
+        /*         case let .left(name): return name */
+        /*         case let .right(result): return "\(result.name) passed: \(result.state)" */
+        /*         } */
+        /*     }.joined(separator: " - ") */
+        /* }.joined(separator: "\n") */
+    }
+
+    private static func dotReport(_ resultGroups: [ResultGroup]) -> String {
+        return ""
     }
 }
 
