@@ -32,7 +32,6 @@ struct Cat {
     var actions: [Action] = []
 
     private mutating func did(_ action: Action) {
-        print(action)
         actions.append(action)
     }
 
