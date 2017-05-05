@@ -71,8 +71,9 @@ public struct Expression<T> {
     let expression: () -> T
     /* let location: */
 
+    var actual: T { return expression() }
+
     public var to: Expression { return self }
-    public var actual: T { return expression() }
 }
 
 public struct TestResult {
