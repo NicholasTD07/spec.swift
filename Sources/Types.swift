@@ -11,18 +11,18 @@ typealias ResultStep = Either<String, TestResult>
 typealias ResultGroup = [ResultStep]
 
 public struct Test {
-    internal let name: String
+    internal let description: String
     internal let closure: () -> TestResult.State
 }
 
 public class Context {
-    internal let name: String
+    internal let description: String
     internal var befores = [() -> Void]()
     internal var afters = [() -> Void]()
 
 
-    internal init(name: String) {
-        self.name = name
+    internal init(description: String) {
+        self.description = description
     }
 
     public func before(_ before: @escaping () -> Void) {
@@ -33,7 +33,7 @@ public class Context {
         afters.append(after)
     }
 
-    public func context(_ name: String, _ closure: (Context) -> Void) {
+    public func context(_ description: String, _ closure: (Context) -> Void) {
         guard !currentGroup.isEmpty else {
             // Only publicly accessible way to create `Context`
             // is to call the global `describe` func
@@ -41,7 +41,7 @@ public class Context {
             fatalError("Impossible Error...")
         }
 
-        let context = Context(name: name)
+        let context = Context(description: description)
 
         currentGroup.append(.left(context))
 
@@ -50,7 +50,7 @@ public class Context {
         _ = currentGroup.popLast()
     }
 
-    public func it(_ name: String, _ closure: @escaping () -> TestResult.State) {
+    public func it(_ description: String, _ closure: @escaping () -> TestResult.State) {
         guard !currentGroup.isEmpty else {
             // Only publicly accessible way to create `Context`
             // is to call the global `describe` func
@@ -59,7 +59,7 @@ public class Context {
         }
 
         var group = currentGroup
-        let test = Test(name: name, closure: closure)
+        let test = Test(description: description, closure: closure)
 
         group.append(.right(test))
 
@@ -77,7 +77,7 @@ public struct Expression<T> {
 }
 
 public struct TestResult {
-    let name: String
+    let description: String
     let state: State
 
     public enum State {

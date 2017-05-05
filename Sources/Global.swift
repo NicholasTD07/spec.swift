@@ -31,9 +31,9 @@ func execute(_ groups: [Group]) {
             switch step {
             case let .left(context):
                 context.befores.forEach { $0() }
-                return .left(context.name)
+                return .left(context.description)
             case let .right(test):
-                let result = TestResult(name: test.name, state: test.closure())
+                let result = TestResult(description: test.description, state: test.closure())
                 return .right(result)
             }
         }
@@ -62,13 +62,13 @@ extension Either: CustomDebugStringConvertible {
 }
 
 extension Context: CustomDebugStringConvertible {
-    public var debugDescription: String { return name }
+    public var debugDescription: String { return description }
 }
 
 extension Test: CustomDebugStringConvertible {
-    public var debugDescription: String { return name }
+    public var debugDescription: String { return description }
 }
 
 extension TestResult: CustomDebugStringConvertible {
-    public var debugDescription: String { return "\(name) \(state)" }
+    public var debugDescription: String { return "\(description) \(state)" }
 }
