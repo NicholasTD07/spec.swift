@@ -14,19 +14,58 @@ import Darwin.C
 
 import Foundation
 
-var currentGroup: Group = {
-    atexit {
-        print(groups)
-        execute(groups)
-        print(resultGroups)
-    }
-    return []
-}()
-var groups: [Group] = []
-var resultGroups: [ResultGroup] = []
+internal class Global {
+    internal static let shared = Global()
 
-func execute(_ groups: [Group]) {
-    resultGroups = groups.map { group -> ResultGroup in
+    private var currentGroup: Group = []
+    private var groups: [Group] = []
+
+    private init() {
+        atexit {
+            let resultGroups = execute(Global.shared.groups)
+            print(resultGroups) // TODO: report(resultGroups)
+        }
+    }
+
+    internal func addGroup(with context: Context) {
+        currentGroup = [.left(context)]
+
+        context.closure(context)
+    }
+
+    internal func add(context: Context) {
+        guard !currentGroup.isEmpty else {
+            // TODO: update comments... OR BETTER NAMING FTW!
+            // Only publicly accessible way to create `Context`
+            // is to call the global `describe` func
+            // and that adds the created context to currentGroup
+            fatalError("Impossible Error...")
+        }
+        currentGroup.append(.left(context))
+
+        context.closure(context)
+
+        _ = currentGroup.popLast()
+    }
+
+    internal func add(test: Test) {
+        guard !currentGroup.isEmpty else {
+            // TODO: update comments... OR BETTER NAMING FTW!
+            // Only publicly accessible way to create `Context`
+            // is to call the global `describe` func
+            // and that adds the created context to currentGroup
+            fatalError("Impossible Error...")
+        }
+        var group = currentGroup
+
+        group.append(.right(test))
+
+        groups.append(group)
+    }
+}
+
+private func execute(_ groups: [Group]) -> [ResultGroup] {
+    return groups.map { group -> ResultGroup in
         let resultGroup =  group.map { step -> ResultStep in
             switch step {
             case let .left(context):

@@ -17,12 +17,14 @@ public struct Test {
 
 public class Context {
     internal let description: String
+    internal let closure: (Context) -> Void
     internal var befores = [() -> Void]()
     internal var afters = [() -> Void]()
 
 
-    internal init(description: String) {
+    internal init(description: String, closure: @escaping (Context) -> Void) {
         self.description = description
+        self.closure = closure
     }
 
     public func before(_ before: @escaping () -> Void) {
@@ -33,37 +35,18 @@ public class Context {
         afters.append(after)
     }
 
-    public func context(_ description: String, _ closure: (Context) -> Void) {
-        guard !currentGroup.isEmpty else {
-            // Only publicly accessible way to create `Context`
-            // is to call the global `describe` func
-            // and that adds the created context to currentGroup
-            fatalError("Impossible Error...")
-        }
+    // TODO: Get rid of the @escaping
+    // The @escaping was not needed when closure was run in this method
+    public func context(_ description: String, _ closure: @escaping (Context) -> Void) {
+        let context = Context(description: description, closure: closure)
 
-        let context = Context(description: description)
-
-        currentGroup.append(.left(context))
-
-        closure(context)
-
-        _ = currentGroup.popLast()
+        Global.shared.add(context: context)
     }
 
     public func it(_ description: String, _ closure: @escaping () -> TestResult.State) {
-        guard !currentGroup.isEmpty else {
-            // Only publicly accessible way to create `Context`
-            // is to call the global `describe` func
-            // and that adds the created context to currentGroup
-            fatalError("Impossible Error...")
-        }
-
-        var group = currentGroup
         let test = Test(description: description, closure: closure)
 
-        group.append(.right(test))
-
-        groups.append(group)
+        Global.shared.add(test: test)
     }
 }
 
