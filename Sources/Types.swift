@@ -1,14 +1,14 @@
 import Foundation
 
-enum Either<Left, Right> {
+internal enum Either<Left, Right> {
     case left(Left)
     case right(Right)
 }
 
-typealias Step = Either<Context, Test>
-typealias Group = [Step]
-typealias ResultStep = Either<String, TestResult>
-typealias ResultGroup = [ResultStep]
+internal typealias Step = Either<Context, Test>
+internal typealias Group = [Step]
+internal typealias ResultStep = Either<String, TestResult>
+internal typealias ResultGroup = [ResultStep]
 
 public struct Test {
     internal let description: String
@@ -68,17 +68,17 @@ public class Context {
 }
 
 public struct Expression<T> {
-    let expression: () -> T
-    /* let location: */
+    internal let expression: () -> T
+    /* interna let location: */
 
-    var actual: T { return expression() }
+    internal var actual: T { return expression() }
 
     public var to: Expression { return self }
 }
 
 public struct TestResult {
-    let description: String
-    let state: State
+    internal let description: String
+    internal let state: State
 
     public enum State {
         case passed
@@ -86,7 +86,7 @@ public struct TestResult {
         case typeMismatched // TODO: include the expected and actual types if possible
         // TODO: add a mismatching values?
 
-        init(passed: Bool) {
+        internal init(passed: Bool) {
             if passed {
                 self = .passed
             } else {
