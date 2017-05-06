@@ -72,8 +72,13 @@ private func execute(_ groups: [Group]) -> [ResultGroup] {
                 context.befores.forEach { $0() }
                 return .left(context.description)
             case let .right(test):
-                let result = TestResult(description: test.description, state: test.closure())
-                return .right(result)
+                return .right(
+                    TestResult(
+                        state: test.closure(),
+                        description: test.description,
+                        location: test.location
+                    )
+                )
             }
         }
 

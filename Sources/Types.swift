@@ -10,9 +10,16 @@ internal typealias Group = [Step]
 internal typealias ResultStep = Either<String, TestResult>
 internal typealias ResultGroup = [ResultStep]
 
+internal struct SourceLocation {
+    internal let file: String
+    internal let line: Int
+    internal let column: Int
+}
+
 public struct Test {
     internal let description: String
     internal let closure: () -> TestResult.State
+    internal let location: SourceLocation
 }
 
 public class Context {
@@ -43,8 +50,18 @@ public class Context {
         Global.shared.add(context: context)
     }
 
-    public func it(_ description: String, _ closure: @escaping () -> TestResult.State) {
-        let test = Test(description: description, closure: closure)
+    public func it(
+        _ description: String,
+        file: String = #file,
+        line: Int = #line,
+        column: Int = #column,
+        _ closure: @escaping () -> TestResult.State
+    ) {
+        let test = Test(
+            description: description,
+            closure: closure,
+            location: SourceLocation(file: file, line: line, column: column)
+        )
 
         Global.shared.add(test: test)
     }
@@ -52,7 +69,6 @@ public class Context {
 
 public struct Expression<T> {
     internal let expression: () -> T
-    /* interna let location: */
 
     internal var actual: T { return expression() }
 
@@ -79,8 +95,9 @@ public struct Evaluation<T> {
 }
 
 public struct TestResult {
-    internal let description: String
     internal let state: State
+    internal let description: String
+    internal let location: SourceLocation
 
     public enum State {
         case passed
