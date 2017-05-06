@@ -24,6 +24,8 @@ internal class Global {
         atexit {
             let resultGroups = execute(Global.shared.groups)
             DotReporter.report(resultGroups: resultGroups)
+
+            print(resultGroups)
         }
     }
 

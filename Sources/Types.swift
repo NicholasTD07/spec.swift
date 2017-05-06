@@ -53,10 +53,22 @@ public class Context {
 public struct Expression<T> {
     internal let expression: () -> T
     /* interna let location: */
+    internal let evaluate: (Bool) -> Bool
+
+    internal init(
+        expression: @escaping () -> T,
+        evaluate: @escaping (Bool) -> Bool = { $0 }
+    ) {
+        self.expression = expression
+        self.evaluate = evaluate
+    }
 
     internal var actual: T { return expression() }
 
     public var to: Expression { return self }
+    public var toNot: Expression {
+        return Expression(expression: expression, evaluate: { return !$0 })
+    }
 }
 
 public struct TestResult {

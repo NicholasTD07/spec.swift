@@ -67,6 +67,9 @@ func testSpec() {
         $0.it("did not eat") { expect(cat.actions).to.beEmpty() }
         // `it` runs before the after closure
         $0.it("did not sleep") { expect(cat.actions).to.beEmpty() }
+
+        // test `toNot`
+        $0.it("should fail") { expect([]).toNot.beEmpty() }
     }
 }
 
