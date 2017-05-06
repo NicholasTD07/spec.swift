@@ -34,12 +34,16 @@ enum DotReporter {
 
         summary(results: Array(results))
     }
-
-    private static func summary(results: [TestResult]) {
-        let total = results.count
-        let passed = results.filter { $0.state == .passed }.count
-        let failed = results.filter { $0.state != .passed }.count
-
-        print("\(total) examples, \(failed) failed, \(passed) passed.")
-    }
 }
+
+private func summary(results: [TestResult]) {
+    let total = results.count
+    let passed = results.filter { $0.state == .passed }.count
+    let failed = results.filter { $0.state != .passed }.count
+
+    print("\(total) examples, \(failed) failed, \(passed) passed.")
+}
+
+/* private func _(results: [TestResult]) { */
+/*     print("\(file):\(line):\(column) expected to \(expectation), got \(actual)") */
+/* } */
