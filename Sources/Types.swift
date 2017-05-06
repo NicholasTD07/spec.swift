@@ -57,10 +57,10 @@ public struct Expression<T> {
     internal var actual: T { return expression() }
 
     public var to: Evaluation<T> {
-        return Evaluation(
-            map: { $0 },
-            actual: actual
-        )
+        return Evaluation(map: { $0 }, actual: actual)
+    }
+    public var toNot: Evaluation<T> {
+        return Evaluation(map: { !$0 }, actual: actual)
     }
 }
 
