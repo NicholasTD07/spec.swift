@@ -1,14 +1,14 @@
 import Foundation
 
-extension Expression where T: Collection {
+extension Evaluation where T: Collection {
     public func beEmpty() -> TestResult.State {
-        return .init(passed: actual.isEmpty)
+        return .init(passed: evaluate { $0.isEmpty })
     }
 }
 
-extension Expression where T: Sequence, T.Iterator.Element: Equatable {
+extension Evaluation where T: Sequence, T.Iterator.Element: Equatable {
     public func contain(_ value: T.Iterator.Element) -> TestResult.State {
-        return .init(passed: actual.contains(value))
+        return .init(passed: evaluate { $0.contains(value) })
     }
 }
 

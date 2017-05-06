@@ -56,7 +56,26 @@ public struct Expression<T> {
 
     internal var actual: T { return expression() }
 
-    public var to: Expression { return self }
+    public var to: Evaluation<T> {
+        return Evaluation(
+            map: { $0 },
+            actual: actual
+        )
+    }
+}
+
+public struct Evaluation<T> {
+    private let map: (Bool) -> Bool
+    private let actual: T
+
+    fileprivate init(map: @escaping (Bool) -> Bool, actual: T) {
+        self.map = map
+        self.actual = actual
+    }
+
+    internal func evaluate(_ matcher: (_ actual: T) -> Bool) -> Bool {
+        return map(matcher(actual))
+    }
 }
 
 public struct TestResult {
