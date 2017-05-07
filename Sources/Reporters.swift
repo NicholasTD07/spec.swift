@@ -25,7 +25,11 @@ private extension Array where Element == ResultGroup {
     }
 }
 
-struct Report {
+internal struct Report {
+    internal enum Style {
+        case dot
+    }
+
     private let groups: [ResultGroup]
     private let results: [TestResult]
 
@@ -38,7 +42,15 @@ struct Report {
         self.results = groups.results
     }
 
-    func dots() {
+    internal func report(style: Style) {
+        switch style {
+        case .dot: dots()
+        }
+
+        summary()
+    }
+
+    private func dots() {
         let dots: [String] = results.map {
             switch $0.state {
             case .passed: return "."
@@ -49,7 +61,7 @@ struct Report {
         print(dots.joined(separator: ""))
     }
 
-    func summary() {
+    private func summary() {
         print("\(total) examples, \(failed) failed, \(passed) passed.")
     }
 }

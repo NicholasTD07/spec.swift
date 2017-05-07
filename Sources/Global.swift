@@ -25,8 +25,7 @@ internal class Global {
             let resultGroups = execute(Global.shared.groups)
             let report = Report(groups: resultGroups)
 
-            report.dots()
-            report.summary()
+            report.report(style: .dot)
         }
     }
 
