@@ -16,11 +16,11 @@
             "en",
          );
          mainGroup = OBJ_5;
-         productRefGroup = OBJ_18;
+         productRefGroup = OBJ_20;
          projectDirPath = ".";
          targets = (
-            OBJ_21,
-            OBJ_33,
+            OBJ_23,
+            OBJ_35,
          );
       };
       OBJ_10 = {
@@ -68,23 +68,18 @@
       };
       OBJ_17 = {
          isa = "PBXFileReference";
-         path = "Configs";
+         path = "build";
          sourceTree = "SOURCE_ROOT";
       };
       OBJ_18 = {
-         isa = "PBXGroup";
-         children = (
-            OBJ_19,
-            OBJ_20,
-         );
-         name = "Products";
-         path = "";
-         sourceTree = "BUILT_PRODUCTS_DIR";
+         isa = "PBXFileReference";
+         path = "Carthage";
+         sourceTree = "SOURCE_ROOT";
       };
       OBJ_19 = {
          isa = "PBXFileReference";
-         path = "spec.framework";
-         sourceTree = "BUILT_PRODUCTS_DIR";
+         path = "Configs";
+         sourceTree = "SOURCE_ROOT";
       };
       OBJ_2 = {
          isa = "XCConfigurationList";
@@ -96,34 +91,49 @@
          defaultConfigurationName = "Debug";
       };
       OBJ_20 = {
+         isa = "PBXGroup";
+         children = (
+            OBJ_21,
+            OBJ_22,
+         );
+         name = "Products";
+         path = "";
+         sourceTree = "BUILT_PRODUCTS_DIR";
+      };
+      OBJ_21 = {
+         isa = "PBXFileReference";
+         path = "spec.framework";
+         sourceTree = "BUILT_PRODUCTS_DIR";
+      };
+      OBJ_22 = {
          isa = "PBXFileReference";
          path = "specTests.xctest";
          sourceTree = "BUILT_PRODUCTS_DIR";
       };
-      OBJ_21 = {
+      OBJ_23 = {
          isa = "PBXNativeTarget";
-         buildConfigurationList = OBJ_22;
+         buildConfigurationList = OBJ_24;
          buildPhases = (
-            OBJ_25,
-            OBJ_32,
+            OBJ_27,
+            OBJ_34,
          );
          dependencies = (
          );
          name = "spec";
          productName = "spec";
-         productReference = OBJ_19;
+         productReference = OBJ_21;
          productType = "com.apple.product-type.framework";
       };
-      OBJ_22 = {
+      OBJ_24 = {
          isa = "XCConfigurationList";
          buildConfigurations = (
-            OBJ_23,
-            OBJ_24,
+            OBJ_25,
+            OBJ_26,
          );
          defaultConfigurationIsVisible = "0";
          defaultConfigurationName = "Debug";
       };
-      OBJ_23 = {
+      OBJ_25 = {
          isa = "XCBuildConfiguration";
          buildSettings = {
             ENABLE_TESTABILITY = "YES";
@@ -152,7 +162,7 @@
          };
          name = "Debug";
       };
-      OBJ_24 = {
+      OBJ_26 = {
          isa = "XCBuildConfiguration";
          buildSettings = {
             ENABLE_TESTABILITY = "YES";
@@ -181,32 +191,24 @@
          };
          name = "Release";
       };
-      OBJ_25 = {
+      OBJ_27 = {
          isa = "PBXSourcesBuildPhase";
          files = (
-            OBJ_26,
-            OBJ_27,
             OBJ_28,
             OBJ_29,
             OBJ_30,
             OBJ_31,
+            OBJ_32,
+            OBJ_33,
          );
-      };
-      OBJ_26 = {
-         isa = "PBXBuildFile";
-         fileRef = OBJ_8;
-      };
-      OBJ_27 = {
-         isa = "PBXBuildFile";
-         fileRef = OBJ_9;
       };
       OBJ_28 = {
          isa = "PBXBuildFile";
-         fileRef = OBJ_10;
+         fileRef = OBJ_8;
       };
       OBJ_29 = {
          isa = "PBXBuildFile";
-         fileRef = OBJ_11;
+         fileRef = OBJ_9;
       };
       OBJ_3 = {
          isa = "XCBuildConfiguration";
@@ -243,42 +245,50 @@
       };
       OBJ_30 = {
          isa = "PBXBuildFile";
-         fileRef = OBJ_12;
+         fileRef = OBJ_10;
       };
       OBJ_31 = {
          isa = "PBXBuildFile";
-         fileRef = OBJ_13;
+         fileRef = OBJ_11;
       };
       OBJ_32 = {
+         isa = "PBXBuildFile";
+         fileRef = OBJ_12;
+      };
+      OBJ_33 = {
+         isa = "PBXBuildFile";
+         fileRef = OBJ_13;
+      };
+      OBJ_34 = {
          isa = "PBXFrameworksBuildPhase";
          files = (
          );
       };
-      OBJ_33 = {
+      OBJ_35 = {
          isa = "PBXNativeTarget";
-         buildConfigurationList = OBJ_34;
+         buildConfigurationList = OBJ_36;
          buildPhases = (
-            OBJ_37,
             OBJ_39,
+            OBJ_41,
          );
          dependencies = (
-            OBJ_41,
+            OBJ_43,
          );
          name = "specTests";
          productName = "specTests";
-         productReference = OBJ_20;
+         productReference = OBJ_22;
          productType = "com.apple.product-type.bundle.unit-test";
       };
-      OBJ_34 = {
+      OBJ_36 = {
          isa = "XCConfigurationList";
          buildConfigurations = (
-            OBJ_35,
-            OBJ_36,
+            OBJ_37,
+            OBJ_38,
          );
          defaultConfigurationIsVisible = "0";
          defaultConfigurationName = "Debug";
       };
-      OBJ_35 = {
+      OBJ_37 = {
          isa = "XCBuildConfiguration";
          buildSettings = {
             EMBEDDED_CONTENT_CONTAINS_SWIFT = "YES";
@@ -304,7 +314,7 @@
          };
          name = "Debug";
       };
-      OBJ_36 = {
+      OBJ_38 = {
          isa = "XCBuildConfiguration";
          buildSettings = {
             EMBEDDED_CONTENT_CONTAINS_SWIFT = "YES";
@@ -330,18 +340,8 @@
          };
          name = "Release";
       };
-      OBJ_37 = {
-         isa = "PBXSourcesBuildPhase";
-         files = (
-            OBJ_38,
-         );
-      };
-      OBJ_38 = {
-         isa = "PBXBuildFile";
-         fileRef = OBJ_16;
-      };
       OBJ_39 = {
-         isa = "PBXFrameworksBuildPhase";
+         isa = "PBXSourcesBuildPhase";
          files = (
             OBJ_40,
          );
@@ -379,11 +379,21 @@
       };
       OBJ_40 = {
          isa = "PBXBuildFile";
-         fileRef = OBJ_19;
+         fileRef = OBJ_16;
       };
       OBJ_41 = {
+         isa = "PBXFrameworksBuildPhase";
+         files = (
+            OBJ_42,
+         );
+      };
+      OBJ_42 = {
+         isa = "PBXBuildFile";
+         fileRef = OBJ_21;
+      };
+      OBJ_43 = {
          isa = "PBXTargetDependency";
-         target = OBJ_21;
+         target = OBJ_23;
       };
       OBJ_5 = {
          isa = "PBXGroup";
@@ -393,6 +403,8 @@
             OBJ_14,
             OBJ_17,
             OBJ_18,
+            OBJ_19,
+            OBJ_20,
          );
          path = "";
          sourceTree = "<group>";
