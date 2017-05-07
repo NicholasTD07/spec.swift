@@ -1,7 +1,7 @@
 // Assumptions:
 //   1. Only one TestResult per ResultGroup
 //   2. The TestResult is always the last one in a ResultGroup
-// TODO: Make it type-safe
+// TODO: Make the logic constrained by types
 
 private extension Array where Element == ResultGroup {
     var results: [TestResult] {
@@ -25,72 +25,31 @@ private extension Array where Element == ResultGroup {
     }
 }
 
-enum Reporter {
-    private struct Report {
-        private let groups: [ResultGroup]
+struct Report {
+    private let groups: [ResultGroup]
+    private let results: [TestResult]
 
-        internal init(groups: [ResultGroup]) {
-            self.groups = groups
-        }
-    }
-}
+    private var total: Int { return results.count }
+    private var passed: Int { return results.filter { $0.state == .passed }.count }
+    private var failed: Int { return results.filter { $0.state != .passed }.count }
 
-enum DotReporter {
-
-    private struct Report {
-        fileprivate let dots: [Dot]
-        fileprivate let total: Int
-        fileprivate let passed: Int
-        fileprivate let failed: Int
-        fileprivate let failedGroups: [ResultGroup]
-
-        static func from(resultGroups groups: [ResultGroup]) -> Report {
-            let results = groups.results
-
-            let dots: [Dot] = results.map {
-                switch $0.state {
-                    case .passed: return .passed
-                    default: return .failed
-                }
-            }
-
-            return Report(
-                dots: dots,
-                total: results.count,
-                passed: results.filter { $0.state == .passed }.count,
-                failed: results.filter { $0.state != .passed }.count,
-                failedGroups: groups.failed
-            )
-        }
+    internal init(groups: [ResultGroup]) {
+        self.groups = groups
+        self.results = groups.results
     }
 
-    private enum Dot {
-        case passed
-        case failed
-
-        var string: String {
-            switch self {
+    func dots() {
+        let dots: [String] = results.map {
+            switch $0.state {
             case .passed: return "."
-            case .failed: return "F"
+            default: return "F"
             }
         }
+
+        print(dots.joined(separator: ""))
     }
 
-    internal static func report(resultGroups groups: [ResultGroup]) {
-        let results = groups.results
-
-        let dotsString = Report.from(resultGroups: groups).dots.map { $0.string }.joined(separator: "")
-
-        print(dotsString)
-
-        summary(results: Array(results))
+    func summary() {
+        print("\(total) examples, \(failed) failed, \(passed) passed.")
     }
-}
-
-private func summary(results: [TestResult]) {
-    let total = results.count
-    let passed = results.filter { $0.state == .passed }.count
-    let failed = results.filter { $0.state != .passed }.count
-
-    print("\(total) examples, \(failed) failed, \(passed) passed.")
 }

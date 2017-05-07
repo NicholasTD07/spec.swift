@@ -23,7 +23,10 @@ internal class Global {
     private init() {
         atexit {
             let resultGroups = execute(Global.shared.groups)
-            DotReporter.report(resultGroups: resultGroups)
+            let report = Report(groups: resultGroups)
+
+            report.dots()
+            report.summary()
         }
     }
 
