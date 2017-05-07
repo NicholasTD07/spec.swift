@@ -34,8 +34,8 @@ internal struct Report {
     private let results: [TestResult]
 
     private var total: Int { return results.count }
-    private var passed: Int { return results.filter { $0.state == .passed }.count }
-    private var failed: Int { return results.filter { $0.state != .passed }.count }
+    private var passed: Int { return results.filter { $0.passed }.count }
+    private var failed: Int { return results.filter { $0.failed }.count }
 
     internal init(groups: [ResultGroup]) {
         self.groups = groups
@@ -53,19 +53,14 @@ internal struct Report {
     }
 
     private func dots() {
-        let dots: [String] = results.map {
-            switch $0.state {
-            case .passed: return "."
-            default: return "F"
-            }
-        }
+        let dots: [String] = results.map { $0.passed }.map { $0 ? "." : "F" }
 
         print(dots.joined(separator: ""))
     }
 
 
     private func failures() {
-        let results = groups.results.filter { $0.state != .passed }
+        let results = groups.results.filter { $0.failed }
         let locations = results.map { $0.location }
 
         locations.forEach {

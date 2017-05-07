@@ -95,10 +95,6 @@ public struct Evaluation<T> {
 }
 
 public struct TestResult {
-    internal let state: State
-    internal let description: String
-    internal let location: SourceLocation
-
     public enum State {
         case passed
         case failed
@@ -113,5 +109,18 @@ public struct TestResult {
             }
         }
     }
+
+    private let state: State
+    private let description: String
+    internal let location: SourceLocation
+
+    internal init(state: State, description: String, location: SourceLocation) {
+        self.state = state
+        self.description = description
+        self.location = location
+    }
+
+    internal var passed: Bool { return state == .passed }
+    internal var failed: Bool { return state != .passed }
 }
 

@@ -18,7 +18,3 @@ extension Context: CustomDebugStringConvertible {
 extension Test: CustomDebugStringConvertible {
     public var debugDescription: String { return description }
 }
-
-extension TestResult: CustomDebugStringConvertible {
-    public var debugDescription: String { return "\(description) \(state)" }
-}
