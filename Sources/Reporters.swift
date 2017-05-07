@@ -47,6 +47,8 @@ internal struct Report {
         case .dot: dots()
         }
 
+        failures()
+
         summary()
     }
 
@@ -59,6 +61,16 @@ internal struct Report {
         }
 
         print(dots.joined(separator: ""))
+    }
+
+
+    private func failures() {
+        let results = groups.results.filter { $0.state != .passed }
+        let locations = results.map { $0.location }
+
+        locations.forEach {
+            print("\($0.file):\($0.line):\($0.column): error: test failed ")
+        }
     }
 
     private func summary() {
