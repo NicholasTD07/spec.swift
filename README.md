@@ -88,6 +88,11 @@ class SomeTests: XCTestCase {
 }
 ```
 
+### Note: the order of execution
+
+For each example (created by calling `it`), `spec.swift` will call all the
+`before` blocks before the `it` block (within the same `describe` method call).
+
 ## Try it out
 
 1. Clone this repo
