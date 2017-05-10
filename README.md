@@ -59,23 +59,13 @@ Coming soon
 You should see something like this.
 
 ```
-[[Cat, when being fed, eats], [Cat, when being fed, meows], [Cat, did not sleep]]
-eat
-meow
-sleep
-eat
-meow
-sleep
-sleep
-[[Cat, when being fed, eats passed], [Cat, when being fed, meows passed], [Cat, did not sleep passed]]
+.....F
+/path/to/spec.swift/Tests/specTests/specTests.swift:75:14: error: test failed
+6 examples, 1 failed, 5 passed.
 ```
 
 This is proof for all the setup, teardown and also the tests are run.
-
-First line is printed by `./Sources/spec.swift`, the `atexit` closure (line 94).
-All lines after that are printed by `./Tests/specTests/specTests.swift` the
-`Cat.did` method (line 26) except the last line. That's my pseudo test report
-before I have time to make a fancy one.
+Also the test result reporter is working properly.
 
 You can also add or change the tests in the `specTests.swift` file.
 
