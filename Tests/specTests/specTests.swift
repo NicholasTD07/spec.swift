@@ -55,6 +55,9 @@ func testSpec() {
 
         $0.before { cat = Cat() }
 
+        $0.it("did not do anything") { expect(cat.actions) == ([] as [Cat.Action]) }
+        $0.it("did not do anything (optional)") { expect(cat.actions as [Cat.Action]?) == ([] as [Cat.Action]) }
+
         $0.context("when being fed") {
             $0.before { cat.feed(.fish) }
             $0.it("eats") { expect(cat.actions).to.contain(.eat(.fish)) }
@@ -67,12 +70,13 @@ func testSpec() {
         $0.it("did not eat") { expect(cat.actions).to.beEmpty() }
         // `it` runs before the after closure
         $0.it("did not sleep") { expect(cat.actions).to.beEmpty() }
-
     }
 
     describe("spec") {
         $0.it("toNot") { expect([0]).toNot.beEmpty() }
         $0.it("fails") { expect([]).toNot.beEmpty() }
+
+        $0.it("matches arrays") { expect([0]) == [0] }
     }
 }
 
