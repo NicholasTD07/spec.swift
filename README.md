@@ -47,11 +47,50 @@ Nope. Not those. Not now.
 
 ## Usage
 
+### Installation
+
 Coming soon
+
+### Testing with spec.swift
+
+```swift
+import XCTest
+import spec
+
+func testCat() {
+    describe("Cat") {
+        var cat: Cat!
+
+        $0.before { cat = Cat() }
+
+        $0.it("did not eat") { expect(cat.actions).to.beEmpty() }
+
+        $0.context("when being fed") {
+            $0.before { cat.feed(.fish) }
+            $0.it("eats") { expect(cat.actions).to.contain(.eat(.fish)) }
+            $0.it("meows") { expect(cat.actions.last) == .meow }
+        }
+
+        $0.after { cat.sleep() }
+
+        $0.it("did not sleep") { expect(cat.actions).to.beEmpty() }
+    }
+}
+
+class SomeTests: XCTestCase {
+    func testExample() {
+        testCat()
+    }
+
+    static var allTests = [
+        ("testExample", testExample),
+    ]
+}
+```
 
 ## Try it out
 
-1. Clone the repo
+1. Clone this repo
 2. Have Swift 3 installed (if you haven't already got it - you should)
 3. `cd` into this repo's path
 4. `swift test`
