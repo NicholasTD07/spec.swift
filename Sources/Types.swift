@@ -100,6 +100,7 @@ public struct TestResult {
         case failed
         case typeMismatched // TODO: include the expected and actual types if possible
         // TODO: add a mismatching values?
+        case gotNil
 
         internal init(passed: Bool) {
             if passed {

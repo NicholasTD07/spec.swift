@@ -22,7 +22,7 @@ public func == <T>(_ expression: Expression<Optional<[T]>>, _ expected: [T]) -> 
     where T: Equatable
 {
     guard let actual = expression.actual else {
-        return .typeMismatched
+        return .gotNil
     }
 
     return .init(passed: actual == expected)
@@ -32,7 +32,7 @@ public func == <T>(_ expression: Expression<Optional<T>>, _ expected: T) -> Test
     where T: Equatable
 {
     guard let actual = expression.actual else {
-        return .typeMismatched
+        return .gotNil
     }
 
     return .init(passed: actual == expected)
@@ -42,7 +42,7 @@ public func != <T>(_ expression: Expression<Optional<T>>, _ expected: T) -> Test
     where T: Equatable
 {
     guard let actual = expression.actual else {
-        return .typeMismatched
+        return .gotNil
     }
 
     return .init(passed: actual != expected)
