@@ -12,6 +12,12 @@ extension Evaluation where T: Sequence, T.Iterator.Element: Equatable {
     }
 }
 
+extension Evaluation where T == Bool {
+    public func beTrue() -> TestResult.State {
+        return .init(passed: evaluate { $0 })
+    }
+}
+
 public func == <T>(_ expression: Expression<Optional<[T]>>, _ expected: [T]) -> TestResult.State
     where T: Equatable
 {

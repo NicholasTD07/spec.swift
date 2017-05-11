@@ -76,6 +76,8 @@ func testSpec() {
         $0.it("toNot") { expect([0]).toNot.beEmpty() }
         $0.it("fails") { expect([]).toNot.beEmpty() }
 
+        $0.it("matches true") { expect(true).to.beTrue() }
+        $0.it("matches false") { expect(false).toNot.beTrue() }
         $0.it("matches arrays") { expect([0]) == [0] }
     }
 }
