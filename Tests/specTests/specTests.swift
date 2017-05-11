@@ -78,6 +78,7 @@ func testSpec() {
 
         $0.it("matches true") { expect(true).to.beTrue() }
         $0.it("matches false") { expect(false).toNot.beTrue() }
+        $0.it("matches equatables") { expect(0) != 1 }
         $0.it("matches arrays") { expect([0]) == [0] }
     }
 }
