@@ -14,15 +14,6 @@ private extension Array where Element == ResultGroup {
             }
         }.flatMap { $0 }
     }
-
-    var failed: [ResultGroup] {
-        return filter { group in
-            guard let last = group.last else { return false }
-            guard case .left = last else { return false }
-
-            return true
-        }
-    }
 }
 
 internal struct Report {
