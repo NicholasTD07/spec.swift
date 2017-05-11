@@ -1,5 +1,6 @@
 tags
 .DS_Store
+xcov_report/
 
 # Xcode
 #
