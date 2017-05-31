@@ -42,9 +42,11 @@ internal struct Report {
         self.results = groups.results
     }
 
-    internal func report(style: Style) {
-        switch style {
-        case .dot: dots()
+    internal func report(styles: [Style]) {
+        styles.forEach { style in
+            switch style {
+            case .dot: dots()
+            }
         }
 
         failures()
