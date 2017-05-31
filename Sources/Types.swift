@@ -10,10 +10,18 @@ internal typealias Group = [Step]
 internal typealias ResultStep = Either<String, TestResult>
 internal typealias ResultGroup = [ResultStep]
 
+
+#if !_runtime(_ObjC)
+public typealias FileString = StaticString
+#else
+public typealias FileString = String
+#endif
+
+
 internal struct SourceLocation {
-    internal let file: String
-    internal let line: Int
-    internal let column: Int
+    internal let file: FileString
+    internal let line: UInt
+    internal let column: UInt
 }
 
 public struct Test {
@@ -52,9 +60,9 @@ public class Context {
 
     public func it(
         _ description: String,
-        file: String = #file,
-        line: Int = #line,
-        column: Int = #column,
+        file: FileString = #file,
+        line: UInt = #line,
+        column: UInt = #column,
         _ closure: @escaping () -> TestResult.State
     ) {
         let test = Test(

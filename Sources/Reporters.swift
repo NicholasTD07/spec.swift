@@ -1,3 +1,6 @@
+import func XCTest.XCTFail
+import class XCTest.XCTestCase
+
 // Assumptions:
 //   1. Only one TestResult per ResultGroup
 //   2. The TestResult is always the last one in a ResultGroup
@@ -25,9 +28,16 @@ private extension Array where Element == ResultGroup {
     }
 }
 
+// HACK
+#if _runtime(_ObjC)
+private class ReportingTestCase: XCTestCase { }
+private let globalReportingTestCase = ReportingTestCase()
+#endif
+
 internal struct Report {
     internal enum Style {
         case dot
+        case xctest
     }
 
     private let groups: [ResultGroup]
@@ -46,6 +56,7 @@ internal struct Report {
         styles.forEach { style in
             switch style {
             case .dot: dots()
+            case .xctest: xctest()
             }
         }
 
@@ -60,6 +71,18 @@ internal struct Report {
         print(dots.joined(separator: ""))
     }
 
+    private func xctest() {
+        let results = groups.results.filter { $0.failed }
+        let locations = results.map { $0.location }
+
+        locations.forEach {
+            #if !_runtime(_ObjC)
+                XCTFail("Test failed", file: $0.file, line: $0.line)
+            #else
+                globalReportingTestCase.recordFailure(withDescription: "Test failed", inFile: $0.file, atLine: $0.line, expected: true)
+            #endif
+        }
+    }
 
     private func failures() {
         let results = groups.results.filter { $0.failed }
