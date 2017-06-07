@@ -14,6 +14,19 @@ import Darwin.C
 
 import Foundation
 
+private extension Array where Element == ResultGroup {
+    var testsFailed: Bool {
+        let firstFailed = first { group in
+            guard let last = group.last else { return false }
+            guard case let .right(result) = last else { return false }
+
+            return result.failed
+        }
+
+        return firstFailed != nil
+    }
+}
+
 internal class Global {
     internal static let shared = Global()
 
@@ -22,10 +35,16 @@ internal class Global {
 
     private init() {
         atexit {
-            let resultGroups = execute(Global.shared.groups)
-            let report = Report(groups: resultGroups)
+            let results = execute(Global.shared.groups)
+            let report = Report(groups: results)
 
             report.report(style: .dot)
+
+            if results.testsFailed {
+                exit(1)
+            } else {
+                exit(0)
+            }
         }
     }
 
