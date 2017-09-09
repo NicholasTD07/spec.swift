@@ -13,10 +13,12 @@ It does verify things now. Just not all the following though...
 
 ```swift
 let love = false
-expect(love).to.beTrue()
+
+expect(love).to.beTrue() // fails
+expect(love).to.beTrue().toFail() // expected failure
 
 let dock: [Icon] = ["📔", "🎵", "📷"] // real apps!
-expect(dock).to.beEmpty()
+expect(dock).toNot.beEmpty()
 
 let shopping = ToDo("Buy milk")
 let todos: [ToDo] = [ shopping ]
@@ -103,9 +105,8 @@ For each example (created by calling `it`), `spec.swift` will call all the
 You should see something like this.
 
 ```
-.....F
-/path/to/spec.swift/Tests/specTests/specTests.swift:75:14: error: test failed
-6 examples, 1 failed, 5 passed.
+.......e.....eee
+16 examples, 4 failed (including 4 expected), 12 passed.
 ```
 
 This is proof for all the setup, teardown and also the tests are run.

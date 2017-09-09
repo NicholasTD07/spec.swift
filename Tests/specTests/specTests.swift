@@ -74,7 +74,7 @@ func testSpec() {
 
     describe("spec") {
         $0.it("toNot") { expect([0]).toNot.beEmpty() }
-        $0.it("fails") { expect([]).toNot.beEmpty() }
+        $0.it("toFail") { expect([0]).to.beEmpty().toFail() }
 
         $0.it("matches true") { expect(true).to.beTrue() }
         $0.it("matches false") { expect(false).toNot.beTrue() }
@@ -88,9 +88,9 @@ func testSpec() {
             $0.context("optional - failing tests") {
                 let optional: Int? = nil
 
-                $0.it("matches equatables") { expect(optional) == 1 }
-                $0.it("matches equatables") { expect(optional) != 0 }
-                $0.it("matches arrays") { expect(nil) == [0] }
+                $0.it("matches equatables") { (expect(optional) == 1).toFail() }
+                $0.it("matches equatables") { (expect(optional) != 0).toFail() }
+                $0.it("matches arrays") { (expect(nil) == [0]).toFail() }
 
             }
         }

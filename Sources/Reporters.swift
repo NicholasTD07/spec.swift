@@ -26,6 +26,7 @@ internal struct Report {
 
     private var total: Int { return results.count }
     private var passed: Int { return results.filter { $0.passed }.count }
+    private var expectedFailures: Int { return results.filter { $0.expectedFailure }.count }
     private var failed: Int { return results.filter { $0.failed }.count }
 
     internal init(groups: [ResultGroup]) {
@@ -44,7 +45,16 @@ internal struct Report {
     }
 
     private func dots() {
-        let dots: [String] = results.map { $0.passed }.map { $0 ? "." : "F" }
+        let dots: [String] = results.map {
+            switch $0.state {
+            case .failed, .typeMismatched, .gotNil:
+                return "F"
+            case .passed:
+                return "."
+            case .expectedFailure:
+                return "e"
+            }
+        }
 
         print(dots.joined(separator: ""))
     }
@@ -60,6 +70,6 @@ internal struct Report {
     }
 
     private func summary() {
-        print("\(total) examples, \(failed) failed, \(passed) passed.")
+        print("\(total) examples, \(failed + expectedFailures) failed (including \(expectedFailures) expected), \(passed) passed.")
     }
 }

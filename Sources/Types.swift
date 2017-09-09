@@ -98,6 +98,7 @@ public struct TestResult {
     public enum State {
         case passed
         case failed
+        case expectedFailure
         case typeMismatched // TODO: include the expected and actual types if possible
         // TODO: add a mismatching values?
         case gotNil
@@ -109,9 +110,20 @@ public struct TestResult {
                 self = .failed
             }
         }
+
+        public func toFail() -> State {
+            switch self {
+            case .failed, .typeMismatched, .gotNil:
+                return .expectedFailure
+            case .passed:
+                return .failed
+            case .expectedFailure:
+                fatalError("`toFail` should only be called once")
+            }
+        }
     }
 
-    private let state: State
+    public let state: State
     private let description: String
     internal let location: SourceLocation
 
@@ -122,6 +134,16 @@ public struct TestResult {
     }
 
     internal var passed: Bool { return state == .passed }
-    internal var failed: Bool { return state != .passed }
+    internal var expectedFailure: Bool { return state == .expectedFailure }
+    internal var failed: Bool {
+        switch state {
+        case .failed, .typeMismatched, .gotNil:
+            return true
+        case .passed:
+            return false
+        case .expectedFailure:
+            return false
+        }
+    }
 }
 
