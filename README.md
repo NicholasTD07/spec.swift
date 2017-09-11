@@ -124,8 +124,8 @@ For each example (created by calling `it`), `spec.swift` will call all the
 You should see something like this.
 
 ```
-.......e.....eee
-16 examples, 4 failed (including 4 expected), 12 passed.
+.......e......eeee
+18 examples, 5 failed (5 expected), 13 passed.
 ```
 
 This is proof for all the setup, teardown and also the tests are run.
