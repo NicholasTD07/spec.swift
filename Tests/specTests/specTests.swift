@@ -82,7 +82,8 @@ func testSpec() {
         $0.context("equatables") {
             $0.it("matches equatables") { expect(1) == 1 }
             $0.it("matches equatables") { expect(1) != 0 }
-            $0.it("matches arrays") { expect([0]) == [0] }
+            $0.it("matches arrays") { expect([0] as [Int]?) == [0] }
+            $0.it("matches arrays") { expect([0] as [Int]?) != [] }
 
             // TODO: need a way to denote expected failing tests
             $0.context("optional - failing tests") {
@@ -91,7 +92,7 @@ func testSpec() {
                 $0.it("matches equatables") { (expect(optional) == 1).toFail() }
                 $0.it("matches equatables") { (expect(optional) != 0).toFail() }
                 $0.it("matches arrays") { (expect(nil) == [0]).toFail() }
-
+                $0.it("matches arrays") { (expect(nil) != [0]).toFail() }
             }
         }
     }

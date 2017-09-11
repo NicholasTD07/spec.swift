@@ -28,6 +28,16 @@ public func == <T>(_ expression: Expression<Optional<[T]>>, _ expected: [T]) -> 
     return .init(passed: actual == expected)
 }
 
+public func != <T>(_ expression: Expression<Optional<[T]>>, _ expected: [T]) -> TestResult.State
+    where T: Equatable
+{
+    guard let actual = expression.actual else {
+        return .gotNil
+    }
+
+    return .init(passed: actual != expected)
+}
+
 public func == <T>(_ expression: Expression<Optional<T>>, _ expected: T) -> TestResult.State
     where T: Equatable
 {
