@@ -9,7 +9,7 @@ Runs the set up hooks (`before`, `after`) and also the tests.
 
 **Matchers**
 
-It does verify things now. Just not all the following though...
+It can do these:
 
 ```swift
 let love = false
@@ -25,7 +25,7 @@ let todos: [ToDo] = [ shopping ]
 expect(todos).to.contain(shopping)
 ```
 
-It can do these now:
+and also these:
 
 ```swift
 expect(42) == 42
@@ -45,13 +45,32 @@ More matchers coming soon!
 
 **Async Tests**
 
-Nope. Not those. Not now.
+Nope. Not these. Not now.
 
 ## Usage
 
 ### Installation
 
-Coming soon
+#### Swift Package Manager
+
+Include it as a dependency in the `Package.swift` file:
+
+```swift
+let package = Package(
+    name: "Your Package",
+    dependencies: [
+        .Package(url: "https://github.com/NicholasTD07/spec.swift.git", majorVersion: 1),
+    ]
+)
+```
+
+#### Carthage
+
+Add this line to your `Cartfile`:
+
+```
+github "NicholasTD07/spec.swift" ~> 1.0.0
+```
 
 ### Testing with spec.swift
 
