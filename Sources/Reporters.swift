@@ -70,6 +70,6 @@ internal struct Report {
     }
 
     private func summary() {
-        print("\(total) examples, \(failed + expectedFailures) failed (including \(expectedFailures) expected), \(passed) passed.")
+        print("\(total) examples, \(failed + expectedFailures) failed (\(expectedFailures) expected), \(passed) passed.")
     }
 }
