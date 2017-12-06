@@ -1,0 +1,13 @@
+# Reference:
+#   https://docs.travis-ci.com/user/reference/osx/
+#   https://docs.travis-ci.com/user/languages/objective-c/
+#   https://docs.travis-ci.com/user/build-stages/
+#   https://github.com/ReactiveCocoa/ReactiveSwift/blob/master/.travis.yml
+
+language: objective-c
+osx_image: xcode9.1
+
+jobs:
+  include:
+    - osx_image: xcode9.1
+      script: swift test
