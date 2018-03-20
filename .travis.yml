@@ -1,0 +1,32 @@
+# Reference:
+#   https://docs.travis-ci.com/user/reference/osx/
+#   https://docs.travis-ci.com/user/languages/objective-c/
+#   https://docs.travis-ci.com/user/build-stages/
+#   https://github.com/ReactiveCocoa/ReactiveSwift/blob/master/.travis.yml
+
+language: objective-c
+osx_image: xcode9.1
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - osx_image: xcode8
+
+
+jobs:
+  include:
+    - stage: test on Xcode 9.2, Swift 4.0.3
+      osx_image: xcode9.2
+      script: swift test
+    - stage: test on Xcode 9.1, Swift 4.0.2
+      osx_image: xcode9.1
+      script: swift test
+    - stage: test on Xcode 9, Swift 4.0
+      osx_image: xcode9
+      script: swift test
+    - stage: test on Xcode 8.3, Swift 3.1
+      osx_image: xcode8.3
+      script: swift test
+    - stage: test on Xcode 8, Swift 3
+      osx_image: xcode8
+      script: swift test
