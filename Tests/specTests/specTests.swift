@@ -85,7 +85,6 @@ func testSpec() {
             $0.it("matches arrays") { expect([0] as [Int]?) == [0] }
             $0.it("matches arrays") { expect([0] as [Int]?) != [] }
 
-            // TODO: need a way to denote expected failing tests
             $0.context("optional - failing tests") {
                 let optional: Int? = nil
 
