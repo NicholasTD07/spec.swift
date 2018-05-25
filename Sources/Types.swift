@@ -124,12 +124,10 @@ public struct TestResult {
     }
 
     public let state: State
-    private let description: String
     internal let location: SourceLocation
 
-    internal init(state: State, description: String, location: SourceLocation) {
+    internal init(state: State, location: SourceLocation) {
         self.state = state
-        self.description = description
         self.location = location
     }
 

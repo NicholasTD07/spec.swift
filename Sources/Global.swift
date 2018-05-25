@@ -96,7 +96,6 @@ private func execute(_ groups: [Group]) -> [ResultGroup] {
                 return .right(
                     TestResult(
                         state: test.closure(),
-                        description: test.description,
                         location: test.location
                     )
                 )
