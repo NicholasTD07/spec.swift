@@ -96,16 +96,32 @@ func testSpec() {
         }
     }
 
-    describe("afters") {
+    describe("before and afters") {
+        // BAD: should never assign values to vars outside of `before`s
+        // otherwise it could get overwritten by sub-specs like in this one
         var texts: [String] = ["tada"]
 
-        $0.context("afters should get run") {
+        $0.context("befores and afters should get run") {
             $0.before { texts.append("tada") }
             $0.it("texts has 2 tadas") { expect(texts) == ["tada", "tada"]}
             $0.after { texts = [] }
         }
 
         $0.it("texts is empty if afters are run") { expect(texts).to.beEmpty() }
+    }
+
+    describe("orders") {
+        var texts: [String] = []
+
+        $0.before { texts.append("it") }
+        $0.before { texts.append("should") }
+        $0.it("should be in order") { texts.append("be"); return .passed }
+        $0.after { texts.append("in") }
+        $0.after { texts.append("order") }
+
+        // Assumption: afters are run
+        // which should be guaranteed by the "afters" spec
+        $0.after { assert(texts == ["it", "should", "be", "in", "order"]) }
     }
 }
 
