@@ -95,6 +95,18 @@ func testSpec() {
             }
         }
     }
+
+    describe("afters") {
+        var texts: [String] = ["tada"]
+
+        $0.context("afters should get run") {
+            $0.before { texts.append("tada") }
+            $0.it("texts has 2 tadas") { expect(texts) == ["tada", "tada"]}
+            $0.after { texts = [] }
+        }
+
+        $0.it("texts is empty if afters are run") { expect(texts).to.beEmpty() }
+    }
 }
 
 class specTests: XCTestCase {
