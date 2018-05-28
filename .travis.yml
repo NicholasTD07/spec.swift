@@ -17,7 +17,10 @@ jobs:
   include:
     - stage: test on Xcode 9.3, Swift 4.1
       osx_image: xcode9.3
-      script: swift test && bash <(curl -s https://codecov.io/bash)
+      script: swift test
+    - stage: collect code coverage on Xcode 9.3, Swift 4.1
+      osx_image: xcode9.3
+      script: xcodebuild -scheme spec test && bash <(curl -s https://codecov.io/bash)
     - stage: test on Xcode 9.2, Swift 4.0.3
       osx_image: xcode9.2
       script: swift test
