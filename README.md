@@ -4,6 +4,7 @@
 <p align="center">
 
 [![Travis](https://img.shields.io/travis/NicholasTD07/spec.swift.svg)](https://travis-ci.org/NicholasTD07/spec.swift/)
+[![Codecov](https://img.shields.io/codecov/c/github/NicholasTD07/spec.svg)](https://codecov.io/gh/NicholasTD07/spec.swift)
 [![GitHub license](https://img.shields.io/github/license/NicholasTD07/spec.swift.svg)](https://github.com/NicholasTD07/spec.swift/blob/master/LICENSE)
 [![Carthage](https://img.shields.io/badge/Carthage-compatible-brightgreen.svg)](https://github.com/Carthage/Carthage)
 [![Swift 4](https://img.shields.io/badge/Swift-4-orange.svg)](https://swift.org/)
